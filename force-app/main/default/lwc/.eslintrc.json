@@ -1,0 +1,10 @@
+{
+  "extends": ["@salesforce/eslint-config-lwc/recommended"],
+  "rules": {
+    "no-console": "off",
+    "no-alert": "off",
+    "no-unused-vars" : "off",
+    "guard-for-in" : "off",
+    "no-eval" : "off"
+  }
+}

@@ -1,0 +1,150 @@
+<!--
+  @File Name          : customFilesLWC2.html
+  @Description        : 
+  @Author             : emmanuel.martinez@tengo.co
+  @Group              : 
+  @Last Modified By   : emmanuel.martinez@tengo.co
+  @Last Modified On   : 14/01/2020, 16:49:11
+  @Modification Log   : 
+  Ver       Date            Author      		    Modification
+  1.0    07/01/2020   emmanuel.martinez@tengo.co     Initial Version
+-->
+<template>
+    <div class="container slds-box" style="position:relative">
+        
+        <div class="slds-m-bottom_medium"><lightning-icon icon-name="action:add_file" size="xx-small" ></lightning-icon> &nbsp; <b class="section-title">Files ({attachmentCount})</b></div>
+
+        <!--Attach new files and delete selected files-->
+        <div class="slds-grid slds-gutters">
+
+            <div class="slds-col slds-size_4-of-12">
+                <div class="">
+                    <lightning-file-upload
+                        name="fileUploader"
+                        record-id={recordId}
+                        onuploadfinished={handleUploadFinished}
+                        multiple>
+                    </lightning-file-upload>
+                </div>
+            </div>
+
+            <div class="slds-col slds-size_3-of-12">
+                <div class="slds-m-top_large">                    
+                    <!--<lightning-button label={buttonLabel}
+                                        icon-name="utility:delete"
+                                        disabled={isTrue}
+                                        variant="neutral" 
+                                        onclick={deleteAccounts}>
+                    </lightning-button>-->
+
+                    
+                    <span class="important-text"><b>Bulk actions</b></span> &nbsp;
+                    <lightning-button-menu  alternative-text="Show menu" onselect={handleSelectBulkActions}>
+                        <lightning-menu-item  label="Download selected files" value="download" icon-name="utility:download"></lightning-menu-item>
+                        <lightning-menu-item  label="Delete selected files" value="delete" icon-name="utility:delete"></lightning-menu-item>
+                    </lightning-button-menu>
+                    
+                    
+                    
+                    <span><p>Selected records: <b>{recordsCount}</b></p></span>
+                </div>
+            </div>
+
+            <div class="slds-col slds-size_5-of-12">
+            </div>
+        </div>
+        <br>
+        <br>
+        
+        <!--/Attach new files and delete selected files-->
+
+        <!--Datatable of files-->
+        <div class="">
+            <template if:true={thereAreFiles}>
+                <div class="datatable-container">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={attachments}
+                        columns={columns}
+                        onsave={handleSave}
+                        draft-values={draftValues}
+                        onrowaction={handleRowAction}
+                        sorted-by={sortBy}
+                        sorted-direction={sortDirection}
+                        onsort={handleSortdata}
+                        onrowselection={getSelectedRecords}>
+                    </lightning-datatable>
+                </div>
+            </template>
+            <template if:true={contact.error}>
+                <!-- handle Apex error -->
+            </template>
+        </div>
+        <!--/Datatable of files-->
+
+        <div>
+            <template if:true={modalShow}>
+                <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        
+
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={closeModal} title="Close">
+                                <lightning-icon icon-name="action:close" size="xx-small"></lightning-icon>
+                              <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Change File Category</h2>
+                        </header>
+                        
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                           
+                           <p><b>Current category: {currentSelectedCategory}</b></p> 
+                           <lightning-combobox
+                                name="progress"
+                                label="File category selector"
+                                value={value}
+                                placeholder="Select a category for this file"
+                                options={categoryOptions}
+                                onchange={updateFileCategory} 
+                                class="cmp-in-category">
+                            </lightning-combobox>
+
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_brand" onclick={closeModal}>Close</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        </div>
+
+    </div>
+
+    <div class="exampleHolder" if:true={displaySpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+    </div>
+
+</template>

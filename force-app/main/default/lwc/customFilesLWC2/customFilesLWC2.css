@@ -1,0 +1,13 @@
+.section-title{
+    color: black;
+    font-size: 16px;
+}
+
+.important-text{
+    color: black;
+    font-size: 14px;
+}
+
+.white-color{
+    color: white !important;
+}
